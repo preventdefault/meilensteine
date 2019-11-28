@@ -1,0 +1,22 @@
+{
+  "name": "@preventdefault/meilensteine",
+  "version": "1.0.0",
+  "description": "(Mono)Repository for https://meilensteine.preventdefault.de",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/preventdefault/meilensteine.git"
+  },
+  "author": "Mario Bartlack",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/preventdefault/meilensteine/issues"
+  },
+  "homepage": "https://github.com/preventdefault/meilensteine#readme",
+  "devDependencies": {
+    "lerna": "3.19.0"
+  }
+}
