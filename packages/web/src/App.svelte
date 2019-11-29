@@ -1,27 +1,12 @@
 <script>
-	import { onMount } from 'svelte';
-	import Tailwindcss from './Tailwindcss.svelte';
-
-	/**
-	 * @type {Map}
-	 */
-	export let map;
-
-	/**
-	 * @type {HTMLElement}
-	 */
-	let mapContainer;
-
-	onMount(() => {
-		map.setTarget(mapContainer);
-	});
+  import Tailwindcss from './Tailwindcss.svelte';
+  import Map from './Map.svelte';
 </script>
 
 <style global>
-	@import 'ol/ol.css';
-	@import 'normalize.css';
+  @import 'normalize.css';
 </style>
 
-<Tailwindcss/>
+<Tailwindcss />
 
-<div class="w-screen h-screen" bind:this={mapContainer}></div>
+<Map />

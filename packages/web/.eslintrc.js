@@ -23,6 +23,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'jest/prefer-expect-assertions': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'svelte3/lint-template': 'error',
   },
   plugins: ['svelte3'],
   overrides: [
