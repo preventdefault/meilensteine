@@ -4,7 +4,8 @@
   "description": "(Mono)Repository for https://meilensteine.preventdefault.de",
   "main": "src/main.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "bootstrap": "lerna bootstrap"
   },
   "repository": {
     "type": "git",
