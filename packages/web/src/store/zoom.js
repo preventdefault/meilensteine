@@ -1,3 +1,3 @@
 import { useLocalStorage } from './use-local-storage';
 
-export const zoom = useLocalStorage('zoom', 15);
+export const zoom = useLocalStorage('zoom', 1);

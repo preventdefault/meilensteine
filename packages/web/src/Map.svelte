@@ -11,8 +11,6 @@
     createView,
   } from './openlayers';
 
-  // [13.6044524, 52.7510394]
-
   let map;
 
   /**
@@ -35,9 +33,10 @@
     });
 
     map.on('moveend', event => {
-      const c = event.map.getView().getCenter();
+      const view = event.map.getView();
 
-      center.set(toLonLat(c));
+      center.set(toLonLat(view.getCenter()));
+      zoom.set(view.getZoom());
     });
 
     return () => console.log('unmounted map'); // TODO cleanup map
