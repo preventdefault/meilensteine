@@ -6,11 +6,11 @@ try {
 
   info(`get version from ${path}`);
 
-  const version = require(resolve(path)).version;
+  const { version } = require(resolve(path));
 
-  info(`use version: ${version}`);
+  info(`output version: ${version}`);
 
   setOutput('version', version);
-} catch (/** Error */ error) {
-  setFailed(error.message);
+} catch (/** Error */ { message }) {
+  setFailed(message);
 }
