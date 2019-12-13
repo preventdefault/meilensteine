@@ -1,0 +1,12 @@
+name: 'Build Version'
+description: 'Builds a version based on version field in package.json and current datetime'
+inputs:
+  package-path:  # id of input
+    description: 'path to package.json'
+    required: true
+outputs:
+  version: # id of output
+    description: 'The built version'
+runs:
+  using: 'node12'
+  main: 'index.js'

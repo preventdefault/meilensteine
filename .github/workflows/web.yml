@@ -24,3 +24,11 @@ jobs:
         npm test
       env:
         CI: true
+    - name: build version
+      id: version
+      uses: ./.github/actions/build-version
+      with:
+        package-path: packages/web/package.json
+    - name: output version
+      run: echo "${{steps.version.version}}"
+

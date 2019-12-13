@@ -39,6 +39,7 @@
     "dev": "run-p start:dev autobuild",
     "start": "sirv public --single",
     "start:dev": "sirv public --single --dev",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest",
+    "echo:version": "echo $npm_package_version"
   }
 }
