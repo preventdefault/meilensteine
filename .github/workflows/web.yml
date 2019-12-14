@@ -33,18 +33,18 @@ jobs:
       run: |
         echo "Using version: ${{steps.version.outputs.version}} for Docker"
     - name: Build image
-        run: docker build . --file Dockerfile --tag meilensteine-web
-     - name: Log into registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      run: docker build . --file Dockerfile --tag meilensteine-web
+    - name: Log into registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
     - name: Push image
-        run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/meilensteine-web
-          VERSION=${{steps.version.outputs.version}}
+      run: |
+        IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/meilensteine-web
+        VERSION=${{steps.version.outputs.version}}
 
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
+        echo IMAGE_ID=$IMAGE_ID
+        echo VERSION=$VERSION
 
-          docker tag meilensteine-web $IMAGE_ID:$VERSION
+        docker tag meilensteine-web $IMAGE_ID:$VERSION
 
-          docker push $IMAGE_ID:$VERSION
+        docker push $IMAGE_ID:$VERSION
 
