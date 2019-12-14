@@ -33,7 +33,7 @@ jobs:
       run: |
         echo "Using version: ${{steps.version.outputs.version}} for Docker"
     - name: Build image
-      run: docker build . --file Dockerfile --tag meilensteine-web
+      run: docker build ./packages/web --file ./packages/web/Dockerfile --tag meilensteine-web
     - name: Log into registry
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
     - name: Push image
