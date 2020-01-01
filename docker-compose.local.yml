@@ -1,0 +1,35 @@
+version: "3.7"
+
+services:
+
+  traefik:
+    image: "traefik:2.1.0"
+    container_name: "traefik"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.https.address=:443"
+      - "--providers.file=true"
+      - "--providers.file.filename=/etc/traefik/traefik-local.yml"
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "${PWD}/traefik-local.yml:/etc/traefik/traefik-local.yml"
+      - "${PWD}/dev/certs:/certs"
+
+  web:
+    image: "docker.pkg.github.com/preventdefault/meilensteine/meilensteine-web:0.0.7"
+    container_name: "web"
+    volumes:
+      - "${PWD}/packages/web/public:/usr/share/nginx/html"
+    env_file:
+      - ./.env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web.rule=Host(`${WEB_HOST}`)"
+      - "traefik.http.routers.web.entrypoints=https"
+      - "traefik.http.routers.web.tls=true"
