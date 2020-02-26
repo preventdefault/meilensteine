@@ -1,0 +1,44 @@
+version: "3.7"
+
+services:
+
+  traefik:
+    image: "traefik:2.1.4"
+    container_name: "traefik"
+    command:
+      - --api.dashboard=true
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --providers.docker
+      - --providers.docker.exposedbydefault=false
+      - --certificatesresolvers.sslchallenge.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.sslchallenge.acme.email=${SSL_CHALLENGE_EMAIL}
+      - --certificatesresolvers.sslchallenge.acme.storage=${LETSENCRYPT_ACME_FILE}
+      - --certificatesresolvers.sslchallenge.acme.tlschallenge=true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.dashboard-auth.basicauth.users=${TRAEFIK_DASHBOARD_AUTH}"
+      - "traefik.http.routers.api.rule=${TRAEFIK_DASHBOARD_ROUTE}"
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.routers.api.middlewares=dashboard-auth"
+
+      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
+      - "traefik.http.routers.http-catchall.entrypoints=web"
+      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
+
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  web-app:
+    image: docker.pkg.github.com/preventdefault/meilensteine/meilensteine-web:0.0.8
+    container_name: "web-app"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web-app.rule=Host(`meilensteine.preventdefault.de`)"
+      - "traefik.http.routers.web-app.entrypoints=websecure"
+      - "traefik.http.routers.web-app.tls=true"
+      - "traefik.http.routers.web-app.tls.certresolver=sslchallenge"
